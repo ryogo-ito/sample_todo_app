@@ -1,5 +1,6 @@
 import { TodoType } from "../features/todo/types";
 import { rest } from "msw";
+import { a } from "msw/lib/glossary-de6278a9";
 
 interface ReqType {
   title: string;
@@ -25,12 +26,12 @@ export const todoList: TodoType[] = [
   },
   {
     id: 3,
-    title: "ちんこ",
+    title: "洗濯",
     complete: false,
   },
   {
     id: 4,
-    title: "歯磨きちんこちんこ歯磨きちんこちんこ歯磨きちんこちんこ",
+    title: "買い物",
     complete: false,
   },
 ];
@@ -51,6 +52,14 @@ export const TODO_HANDLER = [
           complete: false,
         },
       ])
+    );
+  }),
+  rest.delete("/mock/todo", (req, res, ctx) => {
+    const id = req.url.searchParams.get("id");
+
+    return res(
+      ctx.status(200),
+      ctx.json(todoList.filter((todo) => todo.id !== Number(id)))
     );
   }),
 ] as const;

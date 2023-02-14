@@ -14,6 +14,7 @@ import {
 import { TodoType } from "../types";
 import { callGetTodoList } from "../api/getTodoList";
 import { callCreateTodo } from "../api/createTodo";
+import { callDeleteTodoList } from "../api/deleteTodoList";
 
 export const Todo = () => {
   const [input, setInput] = useState("");
@@ -43,8 +44,14 @@ export const Todo = () => {
     setTodoList(todos);
   };
 
-  const handleDeleteTodoButtonClick = (id: number) => {
-    setTodoList(todoList.filter((todo) => todo.id !== id));
+  const handleDeleteTodoButtonClick = async (id: number) => {
+    const { todos, error } = await callDeleteTodoList(id);
+
+    if (error) {
+      return;
+    }
+
+    setTodoList(todos);
   };
 
   const handleCompleteTodoCheckChange = (
