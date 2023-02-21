@@ -15,10 +15,12 @@ import { TodoType } from "../types";
 import { callGetTodoList } from "../api/getTodoList";
 import { callCreateTodo } from "../api/createTodo";
 import { callDeleteTodoList } from "../api/deleteTodoList";
+import { useNavigate } from "react-router-dom";
 
 export const Todo = () => {
   const [input, setInput] = useState("");
   const [todoList, setTodoList] = useState<TodoType[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -82,7 +84,7 @@ export const Todo = () => {
           <Button
             colorScheme="teal"
             onClick={handleCreateTodoButtonClick}
-            isDisabled={Boolean(input === "")}
+            isDisabled={!Boolean(input)}
           >
             Create
           </Button>
@@ -97,7 +99,12 @@ export const Todo = () => {
               />
               <ListItem>{todo.title}</ListItem>
               <ButtonGroup variant="outline" spacing="3">
-                <Button colorScheme="teal">Edit</Button>
+                <Button
+                  colorScheme="teal"
+                  onClick={() => navigate(`/todo/${todo.id}`)}
+                >
+                  Edit
+                </Button>
                 <Button
                   colorScheme="red"
                   onClick={() => handleDeleteTodoButtonClick(todo.id)}
