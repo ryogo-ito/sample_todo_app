@@ -17,18 +17,10 @@ jobs:
       REACT_APP_FIREBASE_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_SENDER_ID }}
       CI: false
     steps:
-      - name: checkout Repo
       - uses: actions/checkout@v2
-      - run: npm ci
-
-      - name: build
-      - run: npm run build
-
-      - name: firebase deploy
-      - run: npm run deploy --token=${{ secrets.FIREBASE_TOKEN }}
+      - run: npm ci && npm run build && npm run deploy --token=${{ secrets.FIREBASE_TOKEN }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TODO_SAMPLE_APP_36724 }}'
-          channelId: live
           projectId: todo-sample-app-36724
