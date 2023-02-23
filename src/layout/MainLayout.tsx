@@ -50,7 +50,7 @@ const AppDrawer = () => {
 
 const Header = () => {
   return (
-    <Box px={4} bgColor="gray.100">
+    <Box px={4} mb={7} bgColor="gray.100">
       <Flex as="header" py="4" alignItems="center">
         <AppDrawer />
       </Flex>
