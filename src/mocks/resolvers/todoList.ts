@@ -22,22 +22,22 @@ interface ResType {
 
 export const todoList: TodoType[] = [
   {
-    id: 1,
+    id: "jdljgljljoi",
     title: "歯磨き",
     complete: false,
   },
   {
-    id: 2,
+    id: "jdljglpdsppkgk;jljoi",
     title: "宿題",
     complete: true,
   },
   {
-    id: 3,
+    id: "kljdgljgoiaoa",
     title: "洗濯",
     complete: false,
   },
   {
-    id: 4,
+    id: "kklhjl1asjoirowl;",
     title: "買い物",
     complete: false,
   },
@@ -75,7 +75,7 @@ const del = (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
 
   return res(
     ctx.status(200),
-    ctx.json(todoList.filter((todo) => todo.id !== Number(id)))
+    ctx.json(todoList.filter((todo) => todo.id !== id))
   );
 };
 
