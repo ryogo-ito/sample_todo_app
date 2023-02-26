@@ -45,6 +45,7 @@ export const TodoTable = () => {
             title: doc.data().title,
             complete: doc.data().complete,
             createdAt: doc.data().createdAt.toDate(),
+            updatedAt: doc.data().updatedAt.toDate(),
           }))
         );
       });
@@ -113,10 +114,11 @@ export const TodoTable = () => {
             <TableCaption>Todo list created by you</TableCaption>
             <Thead>
               <Tr>
-                <Th>complete</Th>
+                <Th>完了</Th>
                 <Th>todo</Th>
-                <Th>detail</Th>
-                <Th>Created Date</Th>
+                <Th>詳細</Th>
+                <Th>作成日</Th>
+                <Th>最終更新日</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -152,6 +154,11 @@ export const TodoTable = () => {
                   </Td>
                   <Td>
                     {format(todo.createdAt, "MM月dd日 HH:mm:ss", {
+                      locale: ja,
+                    })}
+                  </Td>
+                  <Td>
+                    {format(todo.updatedAt, "MM月dd日 HH:mm:ss", {
                       locale: ja,
                     })}
                   </Td>
