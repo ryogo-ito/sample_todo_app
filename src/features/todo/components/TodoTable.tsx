@@ -6,9 +6,15 @@ import {
   Container,
   HStack,
   Input,
-  List,
-  ListItem,
   StackDivider,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
   VStack,
 } from "@chakra-ui/react";
 import { TodoType } from "../types";
@@ -18,10 +24,11 @@ import { callDeleteTodoList } from "../api/deleteTodoList";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
-
-export const Todo = () => {
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
+export const TodoTable = () => {
   const [input, setInput] = useState("");
-  const [todoList, setTodoList] = useState<TodoType[]>([]);
+  const [todos, setTodos] = useState<TodoType[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,16 +39,15 @@ export const Todo = () => {
       // }
 
       getDocs(collection(db, "todos")).then((snapShot) => {
-        setTodoList(
+        setTodos(
           snapShot.docs.map((doc) => ({
             id: doc.id,
             title: doc.data().title,
             complete: doc.data().complete,
+            createdAt: doc.data().createdAt.toDate(),
           }))
         );
       });
-
-      // setTodoList(todos);
     })();
   }, []);
 
@@ -55,7 +61,7 @@ export const Todo = () => {
       return;
     }
 
-    setTodoList(todos);
+    setTodos(todos);
   };
 
   const handleDeleteTodoButtonClick = async (id: string) => {
@@ -65,15 +71,15 @@ export const Todo = () => {
       return;
     }
 
-    setTodoList(todos);
+    setTodos(todos);
   };
 
   const handleCompleteTodoCheckChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     id: string
   ) => {
-    setTodoList(
-      todoList.map((todo) => {
+    setTodos(
+      todos.map((todo) => {
         if (todo.id === id) {
           todo.complete = e.target.checked;
         }
@@ -101,33 +107,59 @@ export const Todo = () => {
             Create
           </Button>
         </HStack>
-        <List spacing={3}>
-          {todoList.map((todo) => (
-            <HStack key={todo.id}>
-              <Checkbox
-                size="lg"
-                isChecked={todo.complete}
-                onChange={(e) => handleCompleteTodoCheckChange(e, todo.id)}
-              />
-              <ListItem>{todo.title}</ListItem>
-              <ButtonGroup variant="outline" spacing="3">
-                <Button
-                  colorScheme="teal"
-                  onClick={() => navigate(`/todo/${todo.id}`)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  colorScheme="red"
-                  onClick={() => handleDeleteTodoButtonClick(todo.id)}
-                  isDisabled={!todo.complete}
-                >
-                  Delete
-                </Button>
-              </ButtonGroup>
-            </HStack>
-          ))}
-        </List>
+
+        <TableContainer>
+          <Table variant="striped" colorScheme="teal">
+            <TableCaption>Todo list created by you</TableCaption>
+            <Thead>
+              <Tr>
+                <Th>complete</Th>
+                <Th>todo</Th>
+                <Th>detail</Th>
+                <Th>Created Date</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {todos.map((todo) => (
+                <Tr key={todo.id}>
+                  <Td>
+                    <Checkbox
+                      size="lg"
+                      onChange={(e) =>
+                        handleCompleteTodoCheckChange(e, todo.id)
+                      }
+                      isChecked={todo.complete}
+                    />
+                  </Td>
+                  <Td>{todo.title}</Td>
+                  <Td>
+                    {/*　TODO アイコンに変える　*/}
+                    <ButtonGroup variant="outline" spacing="3">
+                      <Button
+                        colorScheme="teal"
+                        onClick={() => navigate(`/todo/${todo.id}`)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        colorScheme="red"
+                        onClick={() => handleDeleteTodoButtonClick(todo.id)}
+                        isDisabled={!todo.complete}
+                      >
+                        Delete
+                      </Button>
+                    </ButtonGroup>
+                  </Td>
+                  <Td>
+                    {format(todo.createdAt, "MM月dd日 HH:mm:ss", {
+                      locale: ja,
+                    })}
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
       </VStack>
     </Container>
   );

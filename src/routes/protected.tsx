@@ -2,7 +2,7 @@ import { MainLayout } from "../layout/MainLayout";
 import { Suspense } from "react";
 import { Spinner } from "@chakra-ui/react";
 import { Outlet, RouteObject } from "react-router-dom";
-import { Todo } from "../features/todo/components/Todo";
+import { TodoTable } from "../features/todo/components/TodoTable";
 import { TodoDetail } from "../features/todo/components/TodoDetail";
 
 const App = () => {
@@ -32,7 +32,7 @@ export const protectedRoutes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <Todo />,
+        element: <TodoTable />,
       },
       { path: "/todo/:todoId", element: <TodoDetail /> },
     ],
