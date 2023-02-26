@@ -20,28 +20,8 @@ interface ResType {
   complete: string;
 }
 
-export const todoList: TodoType[] = [
-  {
-    id: "jdljgljljoi",
-    title: "歯磨き",
-    complete: false,
-  },
-  {
-    id: "jdljglpdsppkgk;jljoi",
-    title: "宿題",
-    complete: true,
-  },
-  {
-    id: "kljdgljgoiaoa",
-    title: "洗濯",
-    complete: false,
-  },
-  {
-    id: "kklhjl1asjoirowl;",
-    title: "買い物",
-    complete: false,
-  },
-];
+// 使用する場合はここにデータを入れる
+export const todoList: TodoType[] = [];
 
 const get: ResponseResolver<RestRequest<never>, RestContext> = (
   req,
