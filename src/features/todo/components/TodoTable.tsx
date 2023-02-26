@@ -5,6 +5,7 @@ import {
   Checkbox,
   Container,
   HStack,
+  IconButton,
   Input,
   StackDivider,
   Table,
@@ -17,6 +18,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+
 import { TodoType } from "../types";
 import { callGetTodoList } from "../api/getTodoList";
 import { callCreateTodo } from "../api/createTodo";
@@ -26,6 +28,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 export const TodoTable = () => {
   const [input, setInput] = useState("");
@@ -111,15 +114,15 @@ export const TodoTable = () => {
         </HStack>
 
         <TableContainer>
-          <Table variant="striped" colorScheme="teal">
+          <Table variant="striped" colorScheme="gray">
             <TableCaption>Todo list created by you</TableCaption>
             <Thead>
               <Tr>
                 <Th>完了</Th>
                 <Th>todo</Th>
-                <Th>詳細</Th>
                 <Th>作成日</Th>
                 <Th>最終更新日</Th>
+                <Th>詳細</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -164,19 +167,6 @@ const TodoItem = ({
       </Td>
       <Td>{title}</Td>
       <Td>
-        {/*　TODO アイコンに変える　*/}
-        <ButtonGroup variant="outline" spacing="3">
-          <Button colorScheme="teal">Edit</Button>
-          <Button
-            colorScheme="red"
-            onClick={() => onTodoDeleteButtonClick(id)}
-            isDisabled={!complete}
-          >
-            Delete
-          </Button>
-        </ButtonGroup>
-      </Td>
-      <Td>
         {format(createdAt, "MM月dd日 HH:mm:ss", {
           locale: ja,
         })}
@@ -185,6 +175,22 @@ const TodoItem = ({
         {format(updatedAt, "MM月dd日 HH:mm:ss", {
           locale: ja,
         })}
+      </Td>
+      <Td>
+        <ButtonGroup variant="outline" spacing="3">
+          <IconButton
+            aria-label="edit"
+            colorScheme="teal"
+            icon={<EditIcon />}
+          />
+          <IconButton
+            aria-label="delete"
+            colorScheme="red"
+            icon={<DeleteIcon />}
+            onClick={() => onTodoDeleteButtonClick(id)}
+            isDisabled={!complete}
+          />
+        </ButtonGroup>
       </Td>
     </Tr>
   );
