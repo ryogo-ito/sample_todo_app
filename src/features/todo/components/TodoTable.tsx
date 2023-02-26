@@ -26,6 +26,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
+
 export const TodoTable = () => {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState<TodoType[]>([]);
@@ -123,51 +124,68 @@ export const TodoTable = () => {
             </Thead>
             <Tbody>
               {todos.map((todo) => (
-                <Tr key={todo.id}>
-                  <Td>
-                    <Checkbox
-                      size="lg"
-                      onChange={(e) =>
-                        handleCompleteTodoCheckChange(e, todo.id)
-                      }
-                      isChecked={todo.complete}
-                    />
-                  </Td>
-                  <Td>{todo.title}</Td>
-                  <Td>
-                    {/*　TODO アイコンに変える　*/}
-                    <ButtonGroup variant="outline" spacing="3">
-                      <Button
-                        colorScheme="teal"
-                        onClick={() => navigate(`/todo/${todo.id}`)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        onClick={() => handleDeleteTodoButtonClick(todo.id)}
-                        isDisabled={!todo.complete}
-                      >
-                        Delete
-                      </Button>
-                    </ButtonGroup>
-                  </Td>
-                  <Td>
-                    {format(todo.createdAt, "MM月dd日 HH:mm:ss", {
-                      locale: ja,
-                    })}
-                  </Td>
-                  <Td>
-                    {format(todo.updatedAt, "MM月dd日 HH:mm:ss", {
-                      locale: ja,
-                    })}
-                  </Td>
-                </Tr>
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onTodoCheckboxChange={handleCompleteTodoCheckChange}
+                  onTodoDeleteButtonClick={handleDeleteTodoButtonClick}
+                />
               ))}
             </Tbody>
           </Table>
         </TableContainer>
       </VStack>
     </Container>
+  );
+};
+
+interface TodoProps {
+  todo: TodoType;
+  onTodoCheckboxChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => void;
+  onTodoDeleteButtonClick: (id: string) => void;
+}
+
+const TodoItem = ({
+  todo: { id, title, complete, createdAt, updatedAt },
+  onTodoCheckboxChange,
+  onTodoDeleteButtonClick,
+}: TodoProps) => {
+  return (
+    <Tr>
+      <Td>
+        <Checkbox
+          size="lg"
+          onChange={(e) => onTodoCheckboxChange(e, id)}
+          isChecked={complete}
+        />
+      </Td>
+      <Td>{title}</Td>
+      <Td>
+        {/*　TODO アイコンに変える　*/}
+        <ButtonGroup variant="outline" spacing="3">
+          <Button colorScheme="teal">Edit</Button>
+          <Button
+            colorScheme="red"
+            onClick={() => onTodoDeleteButtonClick(id)}
+            isDisabled={!complete}
+          >
+            Delete
+          </Button>
+        </ButtonGroup>
+      </Td>
+      <Td>
+        {format(createdAt, "MM月dd日 HH:mm:ss", {
+          locale: ja,
+        })}
+      </Td>
+      <Td>
+        {format(updatedAt, "MM月dd日 HH:mm:ss", {
+          locale: ja,
+        })}
+      </Td>
+    </Tr>
   );
 };
