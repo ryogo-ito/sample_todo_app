@@ -16,6 +16,8 @@ import { callGetTodoList } from "../api/getTodoList";
 import { callCreateTodo } from "../api/createTodo";
 import { callDeleteTodoList } from "../api/deleteTodoList";
 import { useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase";
 
 export const Todo = () => {
   const [input, setInput] = useState("");
@@ -24,12 +26,22 @@ export const Todo = () => {
 
   useEffect(() => {
     (async () => {
-      const { todos, error } = await callGetTodoList();
-      if (error) {
-        return;
-      }
+      // const { todos, error } = await callGetTodoList();
+      // if (error) {
+      //   return;
+      // }
 
-      setTodoList(todos);
+      getDocs(collection(db, "todos")).then((snapShot) => {
+        setTodoList(
+          snapShot.docs.map((doc) => ({
+            id: doc.id,
+            title: doc.data().title,
+            complete: doc.data().complete,
+          }))
+        );
+      });
+
+      // setTodoList(todos);
     })();
   }, []);
 
@@ -46,7 +58,7 @@ export const Todo = () => {
     setTodoList(todos);
   };
 
-  const handleDeleteTodoButtonClick = async (id: number) => {
+  const handleDeleteTodoButtonClick = async (id: string) => {
     const { todos, error } = await callDeleteTodoList(id);
 
     if (error) {
@@ -58,7 +70,7 @@ export const Todo = () => {
 
   const handleCompleteTodoCheckChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    id: number
+    id: string
   ) => {
     setTodoList(
       todoList.map((todo) => {
