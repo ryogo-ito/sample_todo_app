@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, VStack, Text, Textarea, Button } from "@chakra-ui/react";
 
 export const TodoDetail = () => {

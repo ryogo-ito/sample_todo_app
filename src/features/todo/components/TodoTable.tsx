@@ -20,10 +20,8 @@ import {
 } from "@chakra-ui/react";
 
 import { TodoType } from "../types";
-import { callGetTodoList } from "../api/getTodoList";
 import { callCreateTodo } from "../api/createTodo";
 import { callDeleteTodoList } from "../api/deleteTodoList";
-import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { format } from "date-fns";
@@ -33,7 +31,6 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 export const TodoTable = () => {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState<TodoType[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {

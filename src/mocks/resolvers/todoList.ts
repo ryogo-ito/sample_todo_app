@@ -1,24 +1,10 @@
 import { TodoType } from "../../features/todo/types";
 import {
-  PathParams,
   ResponseComposition,
   ResponseResolver,
-  rest,
   RestContext,
   RestRequest,
 } from "msw";
-import { a } from "msw/lib/glossary-de6278a9";
-
-interface ReqType {
-  title: string;
-  complete: boolean;
-}
-
-interface ResType {
-  id: string;
-  title: string;
-  complete: string;
-}
 
 // 使用する場合はここにデータを入れる
 export const todoList: TodoType[] = [];
