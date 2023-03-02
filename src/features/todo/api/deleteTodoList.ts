@@ -10,6 +10,7 @@ export const callDeleteTodoList = async (
         id,
       },
     });
+
     return { todos };
   } catch (e) {
     return { todos: [], error: e as Error };

@@ -1,5 +1,5 @@
-import { todoMocks } from "./resolvers/todoList";
 import { rest } from "msw";
+import { todoMocks } from "./resolvers/todoList";
 
 export const handlers = [
   rest.get("/mock/todo", todoMocks.get),

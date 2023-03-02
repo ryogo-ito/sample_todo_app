@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { Container, VStack, Text, Textarea, Button } from "@chakra-ui/react";
+import { Container, VStack, Text, Textarea, Button } from '@chakra-ui/react';
 
-export const TodoDetail = () => {
+export function TodoDetail() {
   return (
     <Container maxW="container.xl">
       <VStack>
@@ -11,4 +10,4 @@ export const TodoDetail = () => {
       </VStack>
     </Container>
   );
-};
+}

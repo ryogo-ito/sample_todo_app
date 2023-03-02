@@ -1,0 +1,49 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb",
+        "airbnb-typescript",
+        "airbnb/hooks",
+        "prettier"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": "tsconfig.json"
+    },
+    "plugins": [
+        "import",
+        "unused-imports",
+        "jsx-a11y",
+        "react",
+        "react-hooks"
+    ],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "padding-line-between-statements": [ "error", {
+             "blankLine": "always",
+             "prev": "*",
+             "next": "return"
+         }],
+        "@typescript-eslint/no-use-before-define": ["error", { "functions": false }],
+        "no-param-reassign": ["error", { "props": false }],
+        "import/prefer-default-export": "off",
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": ["**/mocks/**"]
+            }
+        ],
+        "react/jsx-no-useless-fragment": ["error", {
+            "allowExpressions": true
+        }]
+    }
+}
