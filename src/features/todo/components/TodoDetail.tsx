@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
-import { Container, VStack, Text, Textarea, Button } from "@chakra-ui/react";
+import { Container, VStack, Text, Textarea, Button } from '@chakra-ui/react';
 
-export const TodoDetail = () => {
+export function TodoDetail() {
   return (
     <Container maxW="container.xl">
       <VStack>
-        <Text fontSize="6xl">テキスと</Text>
+        <Text fontSize="6xl">テキスト</Text>
         <Textarea />
         <Button colorScheme="teal">保存</Button>
       </VStack>
     </Container>
   );
-};
+}

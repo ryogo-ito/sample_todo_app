@@ -1,7 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 import {
   Box,
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -12,12 +11,13 @@ import {
   IconButton,
   Input,
   useDisclosure,
-} from "@chakra-ui/react";
-import { ArrowRightIcon } from "@chakra-ui/icons";
+} from '@chakra-ui/react';
+import { ArrowRightIcon } from '@chakra-ui/icons';
 
-const AppDrawer = () => {
+function AppDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLButtonElement>(null);
+
   return (
     <>
       <IconButton
@@ -46,9 +46,9 @@ const AppDrawer = () => {
       </Drawer>
     </>
   );
-};
+}
 
-const Header = () => {
+function Header() {
   return (
     <Box px={4} mb={7} bgColor="gray.100">
       <Flex as="header" py="4" alignItems="center">
@@ -56,16 +56,16 @@ const Header = () => {
       </Flex>
     </Box>
   );
-};
+}
 
 interface Props {
   children: React.ReactNode;
 }
-export const MainLayout = ({ children }: Props) => {
+export function MainLayout({ children }: Props) {
   return (
     <>
       <Header />
       <main>{children}</main>
     </>
   );
-};
+}

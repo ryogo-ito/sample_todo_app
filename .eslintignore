@@ -1,0 +1,7 @@
+build/
+public/
+**/coverage/
+**/node_module/
+**/*.min.ts
+*.config.ts
+.*lintrc.json

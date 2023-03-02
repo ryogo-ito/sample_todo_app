@@ -1,11 +1,11 @@
-import { MainLayout } from "../layout/MainLayout";
 import { Suspense } from "react";
 import { Spinner } from "@chakra-ui/react";
 import { Outlet, RouteObject } from "react-router-dom";
+import { MainLayout } from "../layout/MainLayout";
 import { TodoTable } from "../features/todo/components/TodoTable";
 import { TodoDetail } from "../features/todo/components/TodoDetail";
 
-const App = () => {
+function App() {
   return (
     <MainLayout>
       <Suspense
@@ -23,7 +23,7 @@ const App = () => {
       </Suspense>
     </MainLayout>
   );
-};
+}
 
 export const protectedRoutes: RouteObject[] = [
   {
