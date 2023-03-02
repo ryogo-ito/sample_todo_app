@@ -30,7 +30,7 @@ import { callCreateTodo } from '../api/createTodo';
 import { callDeleteTodoList } from '../api/deleteTodoList';
 import { db } from '../../../firebase';
 
-function TodoTable() {
+export function TodoTable() {
   const [input, setInput] = useState('');
   const [todos, setTodos] = useState<TodoType[]>([]);
   // const navigate = useNavigate();
@@ -200,4 +200,3 @@ function TodoItem({
     </Tr>
   );
 }
-export default TodoTable;
