@@ -34,7 +34,7 @@ export const protectedRoutes: RouteObject[] = [
         path: "/",
         element: <TaskTable />,
       },
-      { path: "/task/:todoId", element: <TaskDetail /> },
+      { path: "/task/:taskId", element: <TaskDetail /> },
     ],
   },
 ];

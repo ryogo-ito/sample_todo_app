@@ -129,7 +129,7 @@ export function TaskTable() {
             </Thead>
             <Tbody>
               {todos.map((todo) => (
-                <TodoItem
+                <TaskItem
                   key={todo.id}
                   todo={todo}
                   onTodoCheckboxChange={handleCompleteTodoCheckChange}
@@ -144,7 +144,7 @@ export function TaskTable() {
   );
 }
 
-interface TodoProps {
+interface TaskProps {
   todo: TaskBase;
   onTodoCheckboxChange: (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -152,11 +152,11 @@ interface TodoProps {
   ) => void;
   onTodoDeleteButtonClick: (id: string) => void;
 }
-function TodoItem({
+function TaskItem({
   todo: { id, title, complete, createdAt, updatedAt },
   onTodoCheckboxChange,
   onTodoDeleteButtonClick,
-}: TodoProps) {
+}: TaskProps) {
   return (
     <Tr>
       <Td>
