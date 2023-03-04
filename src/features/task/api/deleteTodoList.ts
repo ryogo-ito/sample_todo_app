@@ -1,11 +1,11 @@
 import axios from "axios";
-import { TodoType } from "../types";
+import { TaskBase } from "../types";
 
 export const callDeleteTodoList = async (
   id: string
-): Promise<{ todos: TodoType[]; error?: Error }> => {
+): Promise<{ todos: TaskBase[]; error?: Error }> => {
   try {
-    const { data: todos } = await axios.delete<TodoType[]>("/mock/todo", {
+    const { data: todos } = await axios.delete<TaskBase[]>("/mock/todo", {
       params: {
         id,
       },

@@ -1,11 +1,11 @@
 import axios from "axios";
-import { TodoType } from "../types";
+import { TaskBase } from "../types";
 
 export const callCreateTodo = async (
   title: string
-): Promise<{ todos: TodoType[]; error?: Error }> => {
+): Promise<{ todos: TaskBase[]; error?: Error }> => {
   try {
-    const { data } = await axios.post<TodoType[]>("/mock/todo", {
+    const { data } = await axios.post<TaskBase[]>("/mock/todo", {
       title,
     });
 

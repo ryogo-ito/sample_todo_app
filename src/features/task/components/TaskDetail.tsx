@@ -1,6 +1,6 @@
 import { Container, VStack, Text, Textarea, Button } from '@chakra-ui/react';
 
-export function TodoDetail() {
+export function TaskDetail() {
   return (
     <Container maxW="container.xl">
       <VStack>

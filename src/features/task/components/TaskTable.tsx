@@ -24,15 +24,15 @@ import { collection, getDocs } from 'firebase/firestore';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { type TodoType } from '../types';
+import { TaskBase } from '../types';
 // import { callGetTodoList } from '../api/getTodoList';
 import { callCreateTodo } from '../api/createTodo';
 import { callDeleteTodoList } from '../api/deleteTodoList';
 import { db } from '../../../firebase';
 
-export function TodoTable() {
+export function TaskTable() {
   const [input, setInput] = useState('');
-  const [todos, setTodos] = useState<TodoType[]>([]);
+  const [todos, setTodos] = useState<TaskBase[]>([]);
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -145,7 +145,7 @@ export function TodoTable() {
 }
 
 interface TodoProps {
-  todo: TodoType;
+  todo: TaskBase;
   onTodoCheckboxChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     id: string,
