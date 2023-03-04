@@ -63,6 +63,6 @@
     "workerDirectory": "public"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix 'src/**/*.{js,jsx,ts,tsx}'"
   }
 }
