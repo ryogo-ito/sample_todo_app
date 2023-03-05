@@ -5,3 +5,9 @@ export interface TaskBase {
   createdAt: Date;
   updatedAt: Date;
 }
+
+
+export interface TaskInput {
+  title: string;
+  description?: string;
+}

@@ -18,17 +18,17 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 // import { useNavigate } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs,addDoc,Timestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { db } from '../../../firebase';
 import { TaskBase } from '../types';
 // import { callGetTodoList } from '../api/getTodoList';
-import { callCreateTodo } from '../api/createTodo';
+// import { callCreateTodo } from '../api/createTodo';
 import { callDeleteTodoList } from '../api/deleteTodoList';
-import { db } from '../../../firebase';
 
 export function TaskTable() {
   const [input, setInput] = useState('');
@@ -42,7 +42,7 @@ export function TaskTable() {
       //   return;
       // }
 
-      getDocs(collection(db, 'todos')).then((snapShot) => {
+      getDocs(collection(db, 'tasks')).then((snapShot) => {
         setTodos(
           snapShot.docs.map((doc) => ({
             id: doc.id,
@@ -61,12 +61,23 @@ export function TaskTable() {
   };
 
   const handleCreateTodoButtonClick = async () => {
-    const { todos: createdTodos, error } = await callCreateTodo(input);
-    if (error != null) {
-      return;
-    }
+    // const { todos: createdTodos, error } = await callCreateTodo(input);
+    // if (error != null) {
+    //   return;
+    // }
+    //
+    // setTodos(createdTodos);
 
-    setTodos(createdTodos);
+    await addDoc(collection(db,'tasks'),{
+      title: input,
+      description: '',
+      complete: false,
+      createdAt: Timestamp.fromDate(new Date()),
+      updatedAt: Timestamp.fromDate(new Date())
+    })
+
+
+    setInput('')
   };
 
   const handleDeleteTodoButtonClick = async (id: string) => {
