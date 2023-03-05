@@ -10,24 +10,23 @@ export const useTaskTable = () => {
 
   // const navigate = useNavigate();
 
+  const fetchTasksCollection = async () => {
+    await getDocs(collection(db, 'tasks')).then((snapShot) => {
+      setTasks(
+        snapShot.docs.map((doc) => ({
+          id: doc.id,
+          title: doc.data().title,
+          complete: doc.data().complete,
+          createdAt: doc.data().createdAt.toDate(),
+          updatedAt: doc.data().updatedAt.toDate(),
+        })),
+      );
+    });
+  };
+
   useEffect(() => {
     (async () => {
-      // const { todos, error } = await callGetTodoList();
-      // if (error) {
-      //   return;
-      // }
-
-      getDocs(collection(db, 'tasks')).then((snapShot) => {
-        setTasks(
-          snapShot.docs.map((doc) => ({
-            id: doc.id,
-            title: doc.data().title,
-            complete: doc.data().complete,
-            createdAt: doc.data().createdAt.toDate(),
-            updatedAt: doc.data().updatedAt.toDate(),
-          })),
-        );
-      });
+      await fetchTasksCollection();
     })();
   }, []);
 
