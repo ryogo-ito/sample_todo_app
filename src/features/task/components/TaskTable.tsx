@@ -18,21 +18,21 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 // import { useNavigate } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs,addDoc,Timestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { type TodoType } from '../types';
-// import { callGetTodoList } from '../api/getTodoList';
-import { callCreateTodo } from '../api/createTodo';
-import { callDeleteTodoList } from '../api/deleteTodoList';
 import { db } from '../../../firebase';
+import { TaskBase } from '../types';
+// import { callGetTodoList } from '../api/getTodoList';
+// import { callCreateTodo } from '../api/createTodo';
+import { callDeleteTodoList } from '../api/deleteTodoList';
 
-export function TodoTable() {
+export function TaskTable() {
   const [input, setInput] = useState('');
-  const [todos, setTodos] = useState<TodoType[]>([]);
+  const [todos, setTodos] = useState<TaskBase[]>([]);
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export function TodoTable() {
       //   return;
       // }
 
-      getDocs(collection(db, 'todos')).then((snapShot) => {
+      getDocs(collection(db, 'tasks')).then((snapShot) => {
         setTodos(
           snapShot.docs.map((doc) => ({
             id: doc.id,
@@ -61,12 +61,23 @@ export function TodoTable() {
   };
 
   const handleCreateTodoButtonClick = async () => {
-    const { todos: createdTodos, error } = await callCreateTodo(input);
-    if (error != null) {
-      return;
-    }
+    // const { todos: createdTodos, error } = await callCreateTodo(input);
+    // if (error != null) {
+    //   return;
+    // }
+    //
+    // setTodos(createdTodos);
 
-    setTodos(createdTodos);
+    await addDoc(collection(db,'tasks'),{
+      title: input,
+      description: '',
+      complete: false,
+      createdAt: Timestamp.fromDate(new Date()),
+      updatedAt: Timestamp.fromDate(new Date())
+    })
+
+
+    setInput('')
   };
 
   const handleDeleteTodoButtonClick = async (id: string) => {
@@ -129,7 +140,7 @@ export function TodoTable() {
             </Thead>
             <Tbody>
               {todos.map((todo) => (
-                <TodoItem
+                <TaskItem
                   key={todo.id}
                   todo={todo}
                   onTodoCheckboxChange={handleCompleteTodoCheckChange}
@@ -144,19 +155,19 @@ export function TodoTable() {
   );
 }
 
-interface TodoProps {
-  todo: TodoType;
+interface TaskProps {
+  todo: TaskBase;
   onTodoCheckboxChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     id: string,
   ) => void;
   onTodoDeleteButtonClick: (id: string) => void;
 }
-function TodoItem({
+function TaskItem({
   todo: { id, title, complete, createdAt, updatedAt },
   onTodoCheckboxChange,
   onTodoDeleteButtonClick,
-}: TodoProps) {
+}: TaskProps) {
   return (
     <Tr>
       <Td>

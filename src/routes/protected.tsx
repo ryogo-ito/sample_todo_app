@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import { Spinner } from "@chakra-ui/react";
 import { Outlet, RouteObject } from "react-router-dom";
 import { MainLayout } from "../layout/MainLayout";
-import { TodoTable } from "../features/todo/components/TodoTable";
-import { TodoDetail } from "../features/todo/components/TodoDetail";
+import { TaskTable } from "../features/task/components/TaskTable";
+import { TaskDetail } from "../features/task/components/TaskDetail";
 
 function App() {
   return (
@@ -32,9 +32,9 @@ export const protectedRoutes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <TodoTable />,
+        element: <TaskTable />,
       },
-      { path: "/todo/:todoId", element: <TodoDetail /> },
+      { path: "/task/:taskId", element: <TaskDetail /> },
     ],
   },
 ];
