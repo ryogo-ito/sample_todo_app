@@ -1,4 +1,3 @@
-import { ChangeEvent, useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -19,92 +18,21 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
-
-// import { useNavigate } from 'react-router-dom';
-import { collection, getDocs,addDoc,Timestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { db } from '../../../firebase';
 import { TaskBase } from '../types';
-// import { callGetTodoList } from '../api/getTodoList';
-// import { callCreateTodo } from '../api/createTodo';
-import { callDeleteTodoList } from '../api/deleteTodoList';
+import { useTaskTable } from '../hooks/useTaskTable';
 
 export function TaskTable() {
-  const [input, setInput] = useState('');
-  const [todos, setTodos] = useState<TaskBase[]>([]);
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    (async () => {
-      // const { todos, error } = await callGetTodoList();
-      // if (error) {
-      //   return;
-      // }
-
-      getDocs(collection(db, 'tasks')).then((snapShot) => {
-        setTodos(
-          snapShot.docs.map((doc) => ({
-            id: doc.id,
-            title: doc.data().title,
-            complete: doc.data().complete,
-            createdAt: doc.data().createdAt.toDate(),
-            updatedAt: doc.data().updatedAt.toDate(),
-          })),
-        );
-      });
-    })();
-  }, []);
-
-  const handleInputTodoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
-
-  const handleCreateTodoButtonClick = async () => {
-    // const { todos: createdTodos, error } = await callCreateTodo(input);
-    // if (error != null) {
-    //   return;
-    // }
-    //
-    // setTodos(createdTodos);
-
-    await addDoc(collection(db,'tasks'),{
-      title: input,
-      description: '',
-      complete: false,
-      createdAt: Timestamp.fromDate(new Date()),
-      updatedAt: Timestamp.fromDate(new Date())
-    })
-
-
-    setInput('')
-  };
-
-  const handleDeleteTodoButtonClick = async (id: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { todos, error } = await callDeleteTodoList(id);
-
-    if (error != null) {
-      return;
-    }
-
-    setTodos(todos);
-  };
-
-  const handleCompleteTodoCheckChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    id: string,
-  ) => {
-    setTodos(
-      todos.map((currentTodo) => {
-        if (currentTodo.id === id) {
-          currentTodo.complete = e.target.checked;
-        }
-
-        return currentTodo;
-      }),
-    );
-  };
+  const {
+    state: { input, tasks },
+    handlers: {
+      handleDeleteTodoButtonClick,
+      handleCreateTodoButtonClick,
+      handleCompleteTodoCheckChange,
+      handleInputTodoChange,
+    },
+  } = useTaskTable();
 
   return (
     <Container maxW="container.xl">
@@ -139,7 +67,7 @@ export function TaskTable() {
               </Tr>
             </Thead>
             <Tbody>
-              {todos.map((todo) => (
+              {tasks.map((todo) => (
                 <TaskItem
                   key={todo.id}
                   todo={todo}
