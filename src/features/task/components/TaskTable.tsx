@@ -19,7 +19,12 @@ import { TodoTableItem } from './TodoTableItem';
 export function TaskTable() {
   const {
     state: { input, todos },
-    handlers: { handleInputTodoChange },
+    handlers: {
+      handleInputTodoChange,
+      handleCreateTodoButtonClick,
+      handleUpdateTodoCheckboxChange,
+      handleDeleteTodoButtonClick,
+    },
   } = useTaskTable();
 
   return (
@@ -33,7 +38,11 @@ export function TaskTable() {
             placeholder="new todo?"
             onChange={handleInputTodoChange}
           />
-          <Button colorScheme="teal" isDisabled={!input}>
+          <Button
+            colorScheme="teal"
+            isDisabled={!input}
+            onClick={handleCreateTodoButtonClick}
+          >
             Create
           </Button>
         </HStack>
@@ -49,7 +58,12 @@ export function TaskTable() {
             </Thead>
             <Tbody>
               {todos.map((todo) => (
-                <TodoTableItem todo={todo} key={todo.ID} />
+                <TodoTableItem
+                  todo={todo}
+                  key={todo.id}
+                  onComplete={handleUpdateTodoCheckboxChange}
+                  onDelete={handleDeleteTodoButtonClick}
+                />
               ))}
             </Tbody>
           </Table>

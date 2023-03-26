@@ -1,10 +1,10 @@
 import { axiosInstance } from '../../../axios';
 
-export const callDeleteTodoList = async (
+export const callUpdateTodoComplete = async (
   id: string,
 ): Promise<{ error?: Error }> => {
   try {
-    await axiosInstance.delete(`/api/todos/${id}`);
+    await axiosInstance.put(`/api/todos/${id}`);
 
     return {};
   } catch (e) {

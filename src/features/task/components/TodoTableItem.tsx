@@ -4,15 +4,25 @@ import { Todo } from '../types';
 
 interface Props {
   todo: Todo;
+  onComplete: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-export function TodoTableItem({ todo: { Name, Completed } }: Props) {
+export function TodoTableItem({
+  todo: { id, name, completed },
+  onComplete,
+  onDelete,
+}: Props) {
   return (
     <Tr>
       <Td>
-        <Checkbox size="lg" isChecked={Completed} />
+        <Checkbox
+          size="lg"
+          isChecked={completed}
+          onChange={() => onComplete(id)}
+        />
       </Td>
-      <Td>{Name}</Td>
+      <Td>{name}</Td>
       <Td>
         <ButtonGroup variant="outline" spacing="3">
           <IconButton
@@ -24,7 +34,8 @@ export function TodoTableItem({ todo: { Name, Completed } }: Props) {
             aria-label="delete"
             colorScheme="red"
             icon={<DeleteIcon />}
-            isDisabled={!Completed}
+            isDisabled={!completed}
+            onClick={() => onDelete(id)}
           />
         </ButtonGroup>
       </Td>
