@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Todo } from '../types';
 import { callGetTaskList } from '../api/getTodoList';
+import { callCreateTodo } from '../api/createTodo';
 
 export const useTaskTable = () => {
   const [input, setInput] = useState('');
@@ -20,6 +21,17 @@ export const useTaskTable = () => {
     setInput(e.target.value);
   };
 
+  const handleCreateTodo = async () => {
+    const { error } = await callCreateTodo(input);
+
+    if (error) {
+      return;
+    }
+
+    await fetchTodos();
+    setInput('');
+  };
+
   useEffect(() => {
     (async () => {
       await fetchTodos();
@@ -33,6 +45,7 @@ export const useTaskTable = () => {
     },
     handlers: {
       handleInputTodoChange,
+      handleCreateTodo,
     },
   };
 };

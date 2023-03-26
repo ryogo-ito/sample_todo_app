@@ -1,16 +1,15 @@
-import axios from "axios";
-import { Todo } from "../types";
+import { axiosInstance } from '../../../axios';
 
 export const callCreateTodo = async (
-  title: string
-): Promise<{ todos: Todo[]; error?: Error }> => {
+  name: string,
+): Promise<{ error?: Error }> => {
   try {
-    const { data } = await axios.post<Todo[]>("/mock/todo", {
-      title,
+    await axiosInstance.post('/api/todos', {
+      name,
     });
 
-    return { todos: data };
+    return {};
   } catch (e) {
-    return { todos: [], error: e as Error };
+    return { error: e as Error };
   }
 };
