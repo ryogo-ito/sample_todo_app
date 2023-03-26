@@ -45,6 +45,7 @@
         ],
         "react/jsx-no-useless-fragment": ["error", {
             "allowExpressions": true
-        }]
+        }],
+        "@typescript-eslint/no-shadow": "off"
     }
 }

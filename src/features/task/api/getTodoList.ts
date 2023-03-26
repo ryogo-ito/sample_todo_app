@@ -1,12 +1,12 @@
-import axios from "axios";
-import { TaskBase } from "../types";
+import { axiosInstance } from '../../../axios';
+import { Todo } from '../types';
 
-export const callGetTodoList = async (): Promise<{
-  todos: TaskBase[];
+export const callGetTaskList = async (): Promise<{
+  todos: Todo[];
   error?: Error;
 }> => {
   try {
-    const { data } = await axios.get<TaskBase[]>("/mock/todo");
+    const { data } = await axiosInstance.get<Todo[]>('/api/todos');
 
     return { todos: data };
   } catch (e) {
