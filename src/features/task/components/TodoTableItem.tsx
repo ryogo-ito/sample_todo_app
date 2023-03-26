@@ -4,13 +4,23 @@ import { Todo } from '../types';
 
 interface Props {
   todo: Todo;
+  onComplete: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-export function TodoTableItem({ todo: { name, completed } }: Props) {
+export function TodoTableItem({
+  todo: { id, name, completed },
+  onComplete,
+  onDelete,
+}: Props) {
   return (
     <Tr>
       <Td>
-        <Checkbox size="lg" isChecked={completed} />
+        <Checkbox
+          size="lg"
+          isChecked={completed}
+          onChange={() => onComplete(id)}
+        />
       </Td>
       <Td>{name}</Td>
       <Td>
@@ -25,6 +35,7 @@ export function TodoTableItem({ todo: { name, completed } }: Props) {
             colorScheme="red"
             icon={<DeleteIcon />}
             isDisabled={!completed}
+            onClick={() => onDelete(id)}
           />
         </ButtonGroup>
       </Td>
