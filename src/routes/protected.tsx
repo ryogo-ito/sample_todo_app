@@ -36,10 +36,10 @@ export const protectedRoutes: RouteObject[] = [
         element: <TaskTable />,
       },
       { path: '/task/:taskId', element: <TaskDetail /> },
+      {
+        path: '/calender',
+        element: <Calender />,
+      },
     ],
-  },
-  {
-    path: '/calender',
-    element: <Calender />,
   },
 ];
