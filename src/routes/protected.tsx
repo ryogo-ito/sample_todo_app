@@ -5,6 +5,7 @@ import { MainLayout } from '../layout/MainLayout';
 import { TaskTable } from '../features/task/components/TaskTable';
 import { TaskDetail } from '../features/task/components/TaskDetail';
 import { Calender } from '../features/calender/components/Calender';
+import { Form } from '../features/form/components/Form';
 
 function App() {
   return (
@@ -39,6 +40,10 @@ export const protectedRoutes: RouteObject[] = [
       {
         path: '/calender',
         element: <Calender />,
+      },
+      {
+        path: '/form',
+        element: <Form />,
       },
     ],
   },
